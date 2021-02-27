@@ -10,7 +10,7 @@ import com.opensource.admin.UserManagement;
 import com.opensource.base.GlobalVariable;
 import com.opensource.base.SeleniumWrapper;
  
-public class TC001_Admin_SearchEmployee_POM {
+public class 	 {
  
 	WebDriver driver;
 	SeleniumWrapper seleniumWrapper;
@@ -26,6 +26,9 @@ public class TC001_Admin_SearchEmployee_POM {
 	  login = new Login(driver);
 	  userManagement = new UserManagement(driver);
  
+	  	
+	  this.username = seleniumWrapper.getCellData(this.getClass().getSimpleName(), 1, 0);
+	  
 	  username = "Admin";
 	  password = "admin123";
  

@@ -41,6 +41,7 @@ public class UserManagement extends SeleniumWrapper{
 	public void searchUser(String user, boolean clickSearch) {
 		reporterLog("Search username in field");
 		type(txt_search, user, "Search field");
+		takeScreenshot("searchUser"+user);
 		if(clickSearch) {
 			click(btn_search, "Button Search");
 		}

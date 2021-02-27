@@ -1,12 +1,21 @@
 package com.opensource.base;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchSessionException;
@@ -18,13 +27,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+
+
 
 
 public class SeleniumWrapper {
@@ -212,4 +219,52 @@ public class SeleniumWrapper {
 		}
 	}
 
+	/**
+	* Get Data from JSON file (Directly)
+	*
+	* @author Ricardo Avalos
+	* @param jsonFile, jsonKey
+	* @return jsonValue
+	* @throws FileNotFoundException
+	*/
+	/**
+	* Get Data from JSON file (Directly)
+	*
+	* @author Ricardo Avalos
+	* @param jsonFile, jsonKey
+	* @return jsonValue
+	* @throws FileNotFoundException
+	*/
+	public String getJSONValue(String jsonFileObj, String jsonKey) throws FileNotFoundException {
+	try {
+
+	 // JSON Data
+	InputStream inputStream = new FileInputStream(GlobalVariable.PATH_JSON_DATA + jsonFileObj + ".json");
+	JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
+
+	 // Get Data
+	String jsonValue = (String) jsonObject.getJSONObject(jsonFileObj).get(jsonKey);
+	return jsonValue;
+
+	 } catch (FileNotFoundException e) {
+	Assert.fail("JSON file is not found");
+	return null;
+	}
+	}
+	
+	/*
+	 * Take screenshot
+	 * 
+	 * @author Ricardo Avalos
+	 * @throws IOException
+	 */
+	public void takeScreenshot(String fileName){
+		try {
+			Screenshot screenshot = new AShot().takeScreenshot(driver);
+			ImageIO.write(screenshot.getImage(), "PNG", new File(GlobalVariable.PATH_SCREENSHOTS + fileName + ".png"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
 }

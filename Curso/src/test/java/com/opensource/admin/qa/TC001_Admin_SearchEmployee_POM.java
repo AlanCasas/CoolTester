@@ -1,5 +1,7 @@
 package com.opensource.admin.qa;
  
+import java.io.FileNotFoundException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -10,7 +12,7 @@ import com.opensource.admin.UserManagement;
 import com.opensource.base.GlobalVariable;
 import com.opensource.base.SeleniumWrapper;
  
-public class 	 {
+public class TC001_Admin_SearchEmployee_POM {
  
 	WebDriver driver;
 	SeleniumWrapper seleniumWrapper;
@@ -19,19 +21,18 @@ public class 	 {
 	String username, password;
  
   @BeforeTest
-  public void beforeTest() {
+  public void beforeTest() throws FileNotFoundException {
  
 	  seleniumWrapper = new SeleniumWrapper(driver);
 	  driver = seleniumWrapper.chromeDriverConnection();
 	  login = new Login(driver);
 	  userManagement = new UserManagement(driver);
  
-	  	
-	  this.username = seleniumWrapper.getCellData(this.getClass().getSimpleName(), 1, 0);
-	  
-	  username = "Admin";
-	  password = "admin123";
+	  //this.username = seleniumWrapper.getCellData(this.getClass().getSimpleName(), 1, 0);
+	  //this.password = seleniumWrapper.getCellData(this.getClass().getSimpleName(), 1, 1);
  
+	  this.username = seleniumWrapper.getJSONValue(this.getClass().getSimpleName(), "username");
+	  this.password = seleniumWrapper.getJSONValue(this.getClass().getSimpleName(), "password");
   }
  
   @Test
